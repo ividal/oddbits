@@ -1,0 +1,22 @@
+This code shows GPU memory releasing problems in ITK.
+
+The code filters N times a specified image. Ideally, after each iteration the memory needed by the filter and input/output images should be freed, since ITK GPU images use smart pointers as well. However, after enough iterations, it will crash due to lack of GPU memory.
+
+Versions affected:
+------------------
+ITK v4.0+ (all versions that support GPU code).
+
+Requirements:
+-------------
+-OpenCL implentation (tested with Nvidia's CUDA 5.0 implementation)
+-ITK v4.0 or above, compiled with ITK_USE_GPU set to On (the problem has been reproduced with versions 4.0 through 4.5 and the nightly build https://github.com/InsightSoftwareConsortium/ITK , commit 45d71742501382baec2f7eccb78068238019588e ).
+
+Compilation:
+------------
+To see the issue, configure with CMake (indicating the path to your version of ITK) and compile with make.
+
+Usage:
+------
+./gpuDiscreteGaussianImageFilter [imageFile] [iterations]
+
+For reference, using the 1024x1024 pixel, Jpeg image provided as example, on a Quadro 4000 with 1.6GB available for testing, 300 iterations sufficed to crash.
