@@ -22,7 +22,6 @@ int main(int argc, char** argv )
 	params[1] = 80;
 	std::vector<uchar> buf;
 	bool code = cv::imencode(".jpg", image, buf, std::vector<int>(params, params+2) );
-	std::cout<<code<<std::endl;
     cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE );
     cv::imshow("Display Image", image);
     cv::waitKey(0);
